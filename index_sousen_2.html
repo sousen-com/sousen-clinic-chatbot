@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>そうせん整形外科クリニック</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif;background:#f0f2f5;display:flex;justify-content:center;align-items:center;min-height:100vh;min-height:100dvh}
+#wrap{display:flex;flex-direction:column;height:100svh;max-height:780px;width:100%;max-width:480px;background:#fff;overflow:hidden;font-size:15px}
+@media(min-width:480px){#wrap{border-radius:16px;box-shadow:0 4px 24px rgba(0,0,0,0.12);margin:16px}}
+#hdr{background:#fff;border-bottom:1px solid #eee;padding:13px 16px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+#hdr-left{display:flex;align-items:center;gap:9px}
+.dot{width:9px;height:9px;border-radius:50%;background:#2A9ED4;flex-shrink:0}
+#hdr-title{font-size:14px;font-weight:700;color:#1a1a1a}
+#hdr-sub{font-size:11px;color:#aaa;margin-top:1px}
+#lang-row{display:flex;gap:5px}
+.lb{font-size:12px;padding:5px 11px;border-radius:99px;border:1px solid #ddd;background:transparent;color:#888;cursor:pointer;font-weight:500}
+.lb.on{background:#2A9ED4;color:#fff;border-color:#2A9ED4}
+#msgs{flex:1;overflow-y:auto;padding:10px 12px;display:flex;flex-direction:column;gap:12px;background:#f0f8fc}
+.row{display:flex;gap:9px;align-items:flex-end;max-width:88%}
+.row.u{align-self:flex-end;flex-direction:row-reverse}
+.av{width:32px;height:32px;border-radius:50%;background:#2A9ED4;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0;overflow:hidden}
+.bbl{padding:11px 14px;font-size:14px;line-height:1.55;word-break:break-word}
+.row.b .bbl{background:#fff;border:1px solid #c8e6f5;border-radius:4px 16px 16px 16px;color:#1a1a1a;box-shadow:0 1px 3px rgba(232,130,26,0.08)}
+.row.u .bbl{background:#2A9ED4;color:#fff;border-radius:16px 4px 16px 16px}
+.cat-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.cat-btn{padding:8px 8px;border-radius:14px;border:1px solid #c8e6f5;background:#fff;cursor:pointer;font-size:12px;font-weight:500;color:#333;text-align:left;line-height:1.4;transition:background 0.15s}
+.cat-btn:active{background:#e0f4fc}
+.drills{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:10px}
+.db{padding:8px 10px;border-radius:14px;border:1px solid #2A9ED4;background:#fff;cursor:pointer;font-size:12px;color:#2A9ED4;text-align:left;line-height:1.4;font-weight:500}
+.db:active{background:#e0f4fc}
+#irow{padding:10px 12px;display:flex;gap:9px;border-top:1px solid #c8e6f5;flex-shrink:0;background:#fff;align-items:center}
+#irow input{flex:1;font-size:16px;padding:10px 15px;border-radius:99px;border:1.5px solid #c8e6f5;outline:none;background:#f0f8fc}
+#irow input:focus{border-color:#2A9ED4;background:#fff}
+#sbtn{width:42px;height:42px;border-radius:50%;background:#2A9ED4;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+#sbtn:active{background:#1a7aaa}
+#lscreen{position:fixed;inset:0;background:#f0f8fc;display:flex;flex-direction:column;align-items:stretch;z-index:100;overflow:hidden}
+.ls-title{font-size:17px;font-weight:700;color:#1a1a1a;text-align:center;line-height:1.5}
+.ls-sub{font-size:15px;color:#1a1a1a;text-align:center;line-height:1.9;font-weight:500}
+.lsbtn{width:100%;padding:18px 20px;border-radius:14px;border:1px solid #c8e6f5;background:#fff;cursor:pointer;font-size:17px;font-weight:600;color:#1a1a1a;text-align:left;display:flex;align-items:center;gap:14px}
+.lsbtn:hover{background:#e0f4fc;border-color:#2A9ED4}
+.lsbtn:active{background:#e0f4fc;border-color:#2A9ED4}
+a.cl{color:#2A9ED4;word-break:break-all}
+</style>
+</head>
+<body>
+<div id="lscreen">
+  <div style="background:#fff;padding:28px 20px 24px;border-bottom:1px solid #c8e6f5;display:flex;flex-direction:column;align-items:center;gap:10px;flex-shrink:0">
+    <div>
+      <div style="font-size:16px;font-weight:700;color:#1a1a1a;text-align:center">そうせん整形外科クリニック</div>
+      <div style="font-size:11px;color:#2A9ED4;letter-spacing:1px;margin-top:3px;text-align:center">SOUSEN ORTHOPEDICS CLINIC</div>
+    </div>
+  </div>
+  <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:20px;padding:32px 28px">
+    <div class="ls-sub">言語を選択してください<br>Please select your language<br>请选择您的语言</div>
+    <button class="lsbtn" onclick="go('ja')"><span style="font-size:28px">🇯🇵</span><div style="flex:1"><div>日本語</div><div style="font-size:12px;color:#aaa;font-weight:400">Japanese</div></div><span style="color:#2A9ED4;font-size:22px">›</span></button>
+    <button class="lsbtn" onclick="go('en')"><span style="font-size:28px">🇺🇸</span><div style="flex:1"><div>English</div><div style="font-size:12px;color:#aaa;font-weight:400">英語</div></div><span style="color:#2A9ED4;font-size:22px">›</span></button>
+    <button class="lsbtn" onclick="go('zh')"><span style="font-size:28px">🇨🇳</span><div style="flex:1"><div>中文</div><div style="font-size:12px;color:#aaa;font-weight:400">中国語</div></div><span style="color:#2A9ED4;font-size:22px">›</span></button>
+  </div>
+</div>
+<div id="wrap">
+  <div id="hdr">
+    <div id="hdr-left">
+      <div class="dot"></div>
+      <div>
+        <div id="hdr-title">そうせん整形外科クリニック</div>
+        <div id="hdr-sub">SOUSEN ORTHOPEDICS CLINIC</div>
+      </div>
+    </div>
+    <div id="lang-row">
+      <button class="lb" onclick="go('ja')">JA</button>
+      <button class="lb" onclick="go('en')">EN</button>
+      <button class="lb" onclick="go('zh')">ZH</button>
+    </div>
+  </div>
+  <div id="msgs"></div>
+  <div id="irow">
+    <input type="text" id="inp" onkeydown="if(event.key==='Enter')send()" />
+    <button id="sbtn" onclick="send()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+    </button>
+  </div>
+</div>
+<script>
+const D={
+ja:{
+  ph:'メッセージを入力...',
+  hi:'こんにちは！\nそうせん整形外科クリニックです😊\n\n下のカテゴリからお選びいただくか、直接ご入力ください。',
+  fb:'ご質問ありがとうございます。\n恐れ入りますが、こちらの内容はチャットでのご案内が難しい場合がございます。\nお電話またはご来院にてお気軽にお問い合わせください。\n\n📞 06-6753-8751',
+  cats:['診療時間・休診日','アクセス・駐車場','予約・受診・持ち物','リハビリ','交通事故について','労災について','外国人旅行者の方へ','子供の整形外科','産前産後の痛み外来','メディカルダイエット','その他','🏠 HPに戻る'],
+  catData:{
+    '診療時間・休診日':{a:'【診療時間】\n\n月・火・水・金\n　午前 9:00〜12:00\n　午後 15:30〜18:30\n\n木曜\n　午前 9:00〜12:00（午後休診）\n\n土曜\n　午前 9:00〜13:00（午後休診）\n　※第1・3・5週土曜日のみ開院\n\n休診日：第2・4週土曜日、日曜日、祝日\n\n年末年始・お盆など例年休診がある期間がございます。\n詳しくはHPの外来診療担当一覧をご確認ください。',d:['午後診の曜日は？','第2・4週土曜について']},
+    'アクセス・駐車場':{a:'【アクセス】\n大阪メトロ今里駅 3番出口より徒歩30秒です。\n\n【駐車場】\n専用駐車場はございません。\nお近くのコインパーキングをご利用ください。',d:[]},
+    '予約・受診・持ち物':{a:'【予約方法】\n診察はネット順番予約のみ可能です。\nお電話ではシステム上、予約をお受けできませんのでご理解ください。\n\nまた、時間の指定をしての予約ではございませんのでご注意ください。\n\n🔗 Web予約ページ\nhttps://ssc8.doctorqube.com/sousen-clinic/\n\nインターネットでのご予約が難しい方は\nご予約がなくても直接ご来院いただけますので\nご安心ください。受付にて番号を発行いたします。',d:['予約なしの待ち時間は？','予約後いつ行けばいい？','明日の予約はできる？','持ち物について','診断書について','保険証なしで受診できる？','健康保険は使えますか？']},
+    'リハビリ':{a:'【リハビリについて】\n\n当院のリハビリは予約制です。\n医師の診察でお体の状態を確認させていただき\nその上でリハビリにご案内いたします。\n\nリハビリをご希望の方は\nまず診察にお越しください。\n\nリハビリのご予約・変更・キャンセルはお電話にてお承りしております。\n📞 06-6753-8751',d:['キャンセル方法','自費リハビリについて','他院からの継続リハビリ','訪問・通所リハビリについて']},
+    '交通事故について':{a:'【交通事故について】\n\n交通事故によるお怪我も対応可能ですので\n安心してご来院ください。\n\n当院で対応できる症状はすべて診察いたします。\n専門外の場合は、適切な専門医をご紹介いたします。\n\n担当の保険会社に当院受診の旨をお伝えいただくと\n手続きがスムーズに進みます。\n\n🔗 https://sousen-clinic.com/pg617.html',d:['整骨院・整体との併用','診断書・後遺症診断書','相手の保険が使えない場合','交通事故のリハビリ']},
+    '労災について':{a:'【労災について】\n\n業務中・通勤中のお怪我による労災にも対応しております。\n安心してご来院ください。\n\n会社から受け取った労災用紙をご持参いただくと\n手続きがスムーズです。',d:['労災用紙は何号を用意すればいいですか？','労災用紙はどこでもらえますか？','労災用紙が準備できていないのですが受診できますか？','労災でリハビリは受けられますか？']},
+    '外国人旅行者の方へ':{a:'【外国語対応について】\n\n外国からお越しの患者様にも\n安心して受診いただけるよう対応しております。\n\n・院長の信貴は、英語での診察が可能です。\n・代診の医師は、翻訳機を使用して診察を行います。\n・受付スタッフも、翻訳を用いてご対応いたします。\n・問診票は英語版をご用意しております。\n\n海外から旅行中の患者様は\nパスポートをご持参ください。',d:['英語の診断書は作れますか？','海外旅行保険は使えますか？','保険証なしで受診できる？']},
+    '子供の整形外科':{a:'【子供の整形外科について】\n\n当院では赤ちゃんから高校生まで\n全ての子供を診察、治療しております。\n何気ない些細なことからスポーツに伴うケガまで\nお気軽にご相談ください。',d:['どんな症状でも受診できる？','子供が怪我をしました','学校の健診で要検査と言われた','姿勢が悪い・見た目が気になる','部活で体が硬いと言われた','子供の扁平足','腕を動かさなくなった']},
+    '産前産後の痛み外来':{a:'【産前産後の痛み外来】\n\n妊娠中・産後のお体の痛みや不調に\n専門的に対応しております。\n\n以下からお選びください。',d:['1. 産前（妊娠中）','2. 産後']},
+    'メディカルダイエット':{a:'【メディカルダイエット外来】\n\n当院では、肥満が関節の痛みにつながることを考慮し\nメディカルダイエットを導入しております。\n\n適応がある方に対し、保険外での販売を行っております。\n初回は医師の診察による適応診断が必要です。\n採血検査は当院が負担いたします。\n\n🔗 https://sousen-clinic.com/medicaldiet.html',d:['メディカルダイエットの費用','マンジャロの料金','リベルサスの料金','スーグラの料金','保険は使えますか？','処方できない場合は？','副作用はありますか？','やめるとリバウンドしますか？']},
+    'その他':{a:'よくある質問をご案内します。\n下のボタンからお選びください。',d:['費用・支払い方法について','海外旅行保険は使えますか？','Wi-Fiはありますか？','松葉杖の貸し出し','セカンドオピニオン','バリアフリー対応','対応している症状について','薬局はありますか？','ハイドロリリースについて','MRI・CT検査について','介護保険について']}
+  },
+  drill:{
+    '持ち物について':'【受診時の持ち物】\n\n① 健康保険証またはマイナンバーカード\n　（月初には必ずご提出ください）\n② 当院の診察券\n③ 各種公費負担の医療受給者証\n④ お薬手帳、もしくは内服中のお薬\n⑤ 病院の紹介状\n\n※③④⑤はお持ちの方のみで大丈夫です\n\n海外から旅行中に受診される方は\nパスポートをご持参ください。',
+    '費用・支払い方法について':'【費用】\n\n診察にかかる費用は\n行う検査や投薬の有無などによって異なりますので\n具体的な金額は診察後にご案内しております。\n\n【お支払い方法】\n現金またはクレジットカードのみになります。\n一般的なクレジットカードは全て利用可能です。\n\nただしクレジットカード会社の都合により\n使用できないこともございます。\n\n❌ スマホ決済は使えません',
+    '午後診の曜日は？':'午後診（15:30〜18:30）は\n月・火・水・金曜のみです。\n\n木曜・土曜は午前診のみとなります。',
+    '第2・4週土曜について':'第2・4週土曜日は休診です。\n\n第1・3・5週土曜は\n午前9:00〜13:00で診療しています。',
+    '予約なしの待ち時間は？':'ご案内は「ご予約の患者さまの合間」となりますので\n待ち時間はその日の予約状況や\n院内の混み具合によって変わります。\n\n具体的な待ち時間は受付時にお伝えできる形となります。\n\nただし、午前9:00・午後15:30の\n開院すぐの時間帯には\n予約なしの方でも比較的スムーズにご案内できる枠を\nいくつかご用意しております。\nお時間に余裕のある方はぜひその時間帯にお越しください。',
+    '予約後いつ行けばいい？':'ネットで予約すると番号が発行されます。\n診療時間内であれば\nお好きな時間にご来院いただけます。\n\n予約の際にメールアドレスを登録していただいている方には\n呼び出しの番号が近くなりましたら\nメールでお知らせしております。\n\n院内でお待ちの患者様の中で\n番号の若い方から順にお呼び出しいたします。\n\nWEB予約ページには今院内でお待ちの方の番号が\n表示されていますので、ご来院の際の目安にご利用ください。\n\n⚠️ 診療時間を過ぎてしまうと受付はできませんのでご了承ください。',
+    '明日の予約はできる？':'予約は当日、インターネットからのみ行っております。\n受診当日にご予約をお願いいたします。\n\n🔗 https://ssc8.doctorqube.com/sousen-clinic/',
+    '診断書について':'当院発行の診断書であれば、即日発行が可能です。\n\nお手持ちの用紙に医師が記載する場合は\n書類の様式によって記載に必要な日数や料金が異なります。\nご希望の際は受付スタッフにご相談ください。',
+    '保険証なしで受診できる？':'海外から旅行中のお怪我でご受診される患者様は\nパスポートを持参で受診可能です。\n\n日本にお住まいの患者様の\n保険証なしでの自由診療は行なっておりませんのでご了承ください。\n\n※保険証切り替え中などで一時的に保険証が手元にない方は\n預かり金をお預かりすることで受診可能です。\n受診後に保険証をご提示いただければ\n自己負担分との差額を精算いたします。',
+    '健康保険は使えますか？':'はい。当院は保険医療機関ですので\n通常の診療には健康保険をご利用いただけます。\n保険証を必ずご持参ください。',
+    '海外旅行保険は使えますか？':'海外旅行保険は、日本国内に窓口をお持ちの\n保険会社・代理店を通じてご利用いただけます。\n\n直接海外の保険会社との精算はできかねますが\n代理店経由であれば対応可能です。\n\n詳しくはご加入の保険会社にご確認ください。',
+    'キャンセル方法':'お電話にてキャンセルをお承りしております。\n📞 06-6753-8751',
+    '自費リハビリについて':'当院では健康保険を利用したリハビリを行っておりますが\n時間や期限の制限がございます。\n\nもっと結果を、もっと効果を出したい方のために\nプライベートリハビリを行っています。\n\n詳しくは受付または担当のセラピストにお気軽にご確認ください。',
+    '他院からの継続リハビリ':'はい。紹介状やこれまでの情報をご持参いただければ\n当院で継続的にリハビリを行うことができます。\n\n⚠️ 同月は他院でのリハビリとの\n併用ができませんのでご注意ください。',
+    '訪問・通所リハビリについて':'【訪問リハビリ】\n介護保険を利用した訪問リハビリサービスを提供しており\n自宅での機能改善支援が可能です。\n介護保険をお持ちの方は受診時にお申し出ください。\n\n【通所リハビリ（デイケア）】\n通所型のリハビリ施設 "Re:Life" を設けており\n介護保険を利用して日帰りで\n機能訓練や運動療法を受けることができます。\n\n※訪問・通所リハビリともに介護保険での利用が基本です。',
+    '労災用紙は何号を用意すればいいですか？':'【業務中のお怪我の場合】\n・当院が初めての病院：5号用紙\n・他院受診後、当院が2件目：6号用紙\n\n【通勤中のお怪我の場合】\n・当院が初めての病院：16号の3\n・他院受診後、当院が2件目：16号の4\n\n不明な場合は受付にてご確認ください。',
+    '労災用紙はどこでもらえますか？':'労災用紙は会社でご用意いただく書類です。\nまずは会社のご担当者にご相談ください。',
+    '労災用紙が準備できていないのですが受診できますか？':'はい、受診可能です。\n労災用紙をご持参いただくまでの間は\n預かり金でご対応させていただきます。\n\n詳しくは受付にてお気軽にお問い合わせください。',
+    '労災でリハビリは受けられますか？':'はい、可能です。\n医師の診察のもとリハビリ開始となりますので\nまずは診察にお越しください。',
+    '整骨院・整体との併用':'基本的には整骨院との並行での治療はお断りしております。\n\nただし近隣の当院との提携整骨院がいくつかありますので\nそこであればご紹介は可能です。\n\n整体との併用は行なっておりません。',
+    '診断書・後遺症診断書':'【警察提出用の診断書】\n当院で診察を行い\n必要に応じて警察提出用の診断書を作成いたします。\n受付でその旨をお伝えください。\n\n【後遺症診断書】\n当院で診察のうえ、必要に応じて作成が可能です。\n2週間少しお時間がかかります。\n\n⚠️ 後遺症診断書の料金は\n保険会社が支払ってくれない場合があるため\n保険会社に必ずご確認ください。\n\n⚠️ 当院が提携していない整骨院からの\n診断書の記載希望はお断りしております。',
+    '相手の保険が使えない場合':'交通事故で相手方の保険が利用できない場合でも\n自賠責保険やご自身の健康保険を用いた診療が可能です。\n\n状況に応じてご案内いたしますので\nまずはご来院ください。',
+    '交通事故のリハビリ':'はい。交通事故によるむち打ちや\n関節・筋肉の不調に対し\nリハビリを行っています。\n\nお気軽にご相談ください。',
+    '英語の診断書は作れますか？':'はい。英語の診断書の作成も承っております。\n\nご希望の際は、スタッフまたは医師までお知らせください。',
+    'どんな症状でも受診できる？':'はい、どのような症状でもお気軽にご来院ください。\n万が一小児科での受診が必要な場合は、\n診察時にご案内いたします。',
+    '子供が怪我をしました':'お子様がお怪我をされた場合は、\nできる限りお早めにご来院いただくことをおすすめいたします。',
+    '学校の健診で要検査と言われた':'可能です。\n学校の検診や書類等々も対応しております。',
+    '姿勢が悪い・見た目が気になる':'はい、診察可能です。\nお子様の姿勢や体の状態を確認した上で、\n適切な対応をご提案いたします。お気軽にご相談ください。',
+    '部活で体が硬いと言われた':'はい、ご受診いただけます。\n体の硬さや動きの問題についても\nお気軽にご相談ください。',
+    '子供の扁平足':'はい、対応可能です。\nレントゲンや外観での診察をもとに、\nリハビリや医療用インソールの作成など\nお子様に合った方法でご対応いたします。',
+    '腕を動かさなくなった':'できる限りお早めにご来院ください。\n骨折などの可能性もございますので、\n整骨院等に行かれる前に、まずは当院へご受診いただくことをおすすめいたします。',
+    '1. 産前（妊娠中）':{a:'【産前（妊娠中）のご来院について】\n\n妊娠中のお体の痛みや不調に対応しております。',d:['妊娠中の受診は可能ですか？','妊娠何ヶ月から受診できますか？','どんな症状でも妊娠中に受診できますか？','妊娠中のリハビリは可能ですか？','妊娠中にレントゲンは撮りますか？','遠方でも受診できますか？']},
+    '2. 産後':{a:'【産後のご来院について】\n\n産後のお体の痛みや不調に対応しております。',d:['産後の診察は子供連れでも大丈夫？','産後の診察はどのようなものですか？','産後のリハビリとはどんなものですか？','産後のリハビリに子供と一緒に行けますか？','産後の外来リハビリは予約できますか？','産後のリハビリは保険適用ですか？','整骨院に通っていますが産後外来も受診できますか？','遠方でも受診できますか？']},
+    '妊娠中の受診は可能ですか？':'はい、可能です。\nお気軽に一度ご来院ください。',
+    '妊娠何ヶ月から受診できますか？':'妊娠初期から妊娠終盤まで、\nどの時期でもご受診いただけます。',
+    'どんな症状でも妊娠中に受診できますか？':'はい、どのような症状でもご受診いただけます。\nただし、婦人科系の疾患と判断された場合は、\n主治医の先生へご紹介させていただくことがございます。',
+    '妊娠中のリハビリは可能ですか？':'はい、妊娠中でもリハビリをお受けいただけます。\nただし、妊娠週数やお体の状態によって\n内容が異なる場合がございます。\n医師の診察の上で判断いたします。',
+    '妊娠中にレントゲンは撮りますか？':'妊娠中はレントゲン撮影を基本的には行いません。\n必要な場合はエコーなど、\nお体への負担が少ない検査のみをご案内いたします。',
+    '遠方でも受診できますか？':'はい、遠方の方もご受診いただけます。\nお気軽に一度ご来院ください。',
+    '産後の診察は子供連れでも大丈夫？':'はい、お子様連れでもご安心ください。\nお気軽にご来院いただけます。',
+    '産後の診察はどのようなものですか？':'産後のお体の痛みやお怪我（骨折・打撲など）、\n気になる身体の症状はすべて診察いたします。\n内科・婦人科系の疾患以外については\nお気軽に当院へご受診ください。',
+    '産後のリハビリとはどんなものですか？':'産後のリハビリでは、お一人おひとりのお体の状態に合わせて\n弱った筋肉や硬くなった関節などを丁寧に診察した上で行います。\n内容は個人差がございますので、\n詳しくはリハビリ担当のスタッフにお気軽にお聞きください。',
+    '産後のリハビリに子供と一緒に行けますか？':'はい、可能です。\nお子様連れの方のために半個室をご用意しております。\nどうぞお気軽にお越しください。',
+    '産後の外来リハビリは予約できますか？':'はい、可能です。\n\nリハビリが初めての方は、まず診察にお越しください。\n医師の診断のもと、リハビリを開始いたします。\n\nすでにリハビリを開始されている方は\nお電話にてご予約いただけます。\n📞 06-6753-8751',
+    '産後のリハビリは保険適用ですか？':'はい、保険適用となります。\nお気軽にご来院ください。',
+    '整骨院に通っていますが産後外来も受診できますか？':'はい、受診可能です。\nぜひお気軽にご来院ください。',
+    'どんな症状で受診すればいいですか？':'足の痛みやお怪我など、気になる症状がございましたら\nお気軽にご受診ください。\nどのような症状でもまずはご来院いただき、\n医師がしっかりと診察いたします。',
+    'どのような治療をされますか？':'まずは症状を確認し、必要な検査を行います。\nその後、患者さんのお体の状態に合わせて\n治療方針を決めていきます。\n\nリハビリテーションが適切であればリハビリを、\nインソールや装具による治療が必要であれば\n装具の作成など、\nそれぞれの状態に合わせた最適な方法をご提案いたします。',
+    'Wi-Fiはありますか？':'誠に申し訳ございませんが\n当院ではWi-Fiのご用意はございません。',
+    '松葉杖の貸し出し':'可能です。医師の診察にお入りいただき\n必要な方には松葉杖の貸し出しを行なっております。\n\nレンタル料金：1,100円（自費）\n預かり金：現金5,000円\n（松葉杖ご返却の際にお返しいたします）',
+    'セカンドオピニオン':'はい。検査データや紹介状をお持ちいただくと\nより正確にご説明できます。\n\n⚠️ セカンドオピニオンの場合は\n予約と保険外となります。\n料金：30分 20,000円',
+    'バリアフリー対応':'はい。車椅子や足腰に不安のある方でも\n安心してご来院いただけます。',
+    '対応している症状について':'対象となる主な疾患は以下になります。\n\n外傷：骨折、打撲、捻挫、傷、火傷\n上肢：肩こり、手の痛み、五十肩、寝違え、手の痺れ、腱鞘炎、手の変形\n下肢：足の痺れ、足の痛み、肉離れ、外反母趾、扁平足、膝の痛み、股関節の痛み\n体幹：首の痛み、背中の痛み、腰痛、筋肉痛、坐骨神経痛\n代謝疾患：骨粗鬆症、痛風、関節リウマチ\n腫瘍：小さなデキモノやシコリ\n\n詳しくはHPの診療内容をご覧ください。\n🔗 https://sousen-clinic.com/pg297.html',
+    'メディカルダイエットの費用':'当院では採血によるリスク確認を徹底しており\n採血検査は当院が負担いたします。\n\n減量薬の料金については以下をご参照ください。\n🔗 https://sousen-clinic.com/wayofcomingdiet.html',
+    'マンジャロの料金':'【マンジャロ 料金】\n・2.5mg：12,000円／2週間\n・5mg：20,000円／2週間\n・7.5mg：28,000円／2週間\n\n🔗 https://sousen-clinic.com/wayofcomingdiet.html',
+    'リベルサスの料金':'【リベルサス 料金】\n・3mg（30錠／1ヶ月分）：13,000円\n・7mg（30錠／1ヶ月分）：26,000円\n\n🔗 https://sousen-clinic.com/wayofcomingdiet.html',
+    'スーグラの料金':'【スーグラ 料金】\n・50mg（30錠／1ヶ月分）：14,000円\n\n🔗 https://sousen-clinic.com/wayofcomingdiet.html',
+    '保険は使えますか？':'減量薬のご購入は保険適用外となります。\nなお、初回の適応診察には健康保険が適用されます。',
+    '処方できない場合は？':'以下に該当する場合は処方できません。\nご来院前にご確認ください。\n\n\u26cf 糖尿病の治療中の方\n\u26cf 低体重の方\n　リベルサス・スーグラ：BMI 17以下\n　マンジャロ：BMI 22以下\n\u26cf 各薬物にアレルギーのある方\n\u26cf 心療内科等に通院中の方\n\u26cf 心臓血管系に異常のある方\n\u26cf 腎・肝・膵系に異常のある方',
+    '副作用はありますか？':'薬剤によっては、まれに吐き気などの副作用が発生する場合があります。\n副作用が発生しにくい服薬方法もご案内しておりますのでお気軽にご相談ください。',
+    'やめるとリバウンドしますか？':'場合によってはリバウンドするケースがあります。\n\n当院ではピラティスを用いたダイエットプログラムや\n痩身鍼灸メニューもご用意しており\n減量した体重の維持をサポートいたします。',
+    'ハイドロリリースについて':'ハイドロリリースは当院で行っております。\n\n初回は健康保険が適用されますが\n2回目以降は保険外となります（1部位 5,000円）。\n\n※医師の診察に基づき、適応と判断された方のみ実施いたします。',
+    'MRI・CT検査について':'院内での検査は行っておりませんが\n提携病院での検査を予約を含めてご案内いたします。\n結果は当院でご説明いたします。',
+    '介護保険について':'【訪問リハビリ】\n介護保険を利用した訪問リハビリを提供しております。\n\n【通所リハビリ（デイケア）】\n通所型リハビリ施設 Re:Life にて\n日帰りで機能訓練・運動療法を受けることができます。\n\n※通常の診療は健康保険のみ対応です。',
+    '薬局はありますか？':'当院は院外処方でございます。\nお近くの調剤薬局、またはかかりつけの薬局でお受け取りください。'
+  }
+},
+
+en:{
+  ph:'Type your message...',
+  hi:'Hello!\nWelcome to Sousen Orthopedic Clinic 😊\n\nPlease select a category below\nor type your question.',
+  fb:'Thank you for your question.\nWe apologize, but this topic may be difficult to address via chat.\nPlease feel free to call us or visit the clinic.\nPlease note that we may have limited ability to assist in languages other than Japanese over the phone.\n\n📞 06-6753-8751',
+  cats:['Clinic Hours','Access & Parking','Reservations & What to Bring','Rehabilitation','Traffic Accidents','Work Injury','Foreign Patients','Children','Prenatal & Postnatal','Other Questions','🏠 Back to website'],
+  catData:{
+    'Clinic Hours':{a:'[Clinic Hours]\n\nMon / Tue / Wed / Fri\n　9:00 AM - 12:00 PM\n　3:30 PM - 6:30 PM\n\nThursday\n　9:00 AM - 12:00 PM (afternoon closed)\n\nSaturday\n　9:00 AM - 1:00 PM (afternoon closed)\n　Open on 1st, 3rd, and 5th Saturdays only\n\nClosed: 2nd & 4th Saturdays, Sundays, public holidays',d:['Afternoon hours','2nd & 4th Saturdays']},
+    'Access & Parking':{a:'[Access]\nIt\'s a 30-second walk from Osaka Metro Imazato Station.\nRight next to Exit 3 of Osaka Metro Imazato Station.\n\n[Parking]\nThere is no dedicated parking lot.\nPlease use nearby coin-operated parking.',d:[]},
+    'Reservations & What to Bring':{a:'[Reservations]\nConsultations can only be reserved online.\nWe cannot accept reservations by phone.\n\n🔗 https://ssc8.doctorqube.com/sousen-clinic/\n\nIf online reservation is difficult, you may walk in.\nA number will be issued at reception.',d:['Walk-in wait times','When to arrive after booking','Can I book for tomorrow?','What to bring','Medical certificates','Visiting without insurance','Can I use health insurance?']},
+    'Rehabilitation':{a:'[Rehabilitation]\n\nRehabilitation is by appointment.\nThe doctor will assess your condition first, then guide you to rehabilitation.\n\nPlease visit for a consultation first.\n\nFor rehabilitation appointments, changes, or cancellations,\nplease contact us by phone.\n📞 06-6753-8751',d:['How to cancel rehab','Continuing rehab from another clinic']},
+    'Traffic Accidents':{a:'[Traffic Accidents]\n\nWe accept injuries resulting from traffic accidents.\nPlease visit us with confidence.\n\nWe treat all applicable symptoms and refer to specialists if needed.\n\nInforming your insurance company in advance will help procedures go smoothly.\n\n🔗 https://sousen-clinic.com/pg617.html',d:['Combined treatment with judo-therapy/chiropractic clinics','Medical & disability certificates','Other party insurance won\'t pay','Rehab for traffic accidents']},
+    'Work Injury':{a:'[Work Injury]\n\nWe accept work-related injuries, both on-the-job and during commuting.\nPlease visit us with confidence.\n\nBringing the workers\' compensation form from your company will help procedures go smoothly.',d:['Which form number do I need?','Where can I get the form?','Can I be seen without the form?','Can I get rehab for work injury?']},
+    'Foreign Patients':{a:'[For Foreign Patients]\n\n・Dr. Shigi is able to conduct consultations in English.\n・Other doctors use translation devices.\n・Reception staff use translation tools.\n・English medical questionnaire available.\n\nVisitors from abroad may consult with their passport.',d:['Medical certificate in English','Overseas travel insurance','Visiting without insurance']},
+    'Children':{a:'[Children]\n\nWe provide examinations and treatment for all children,\nfrom infants to high school students.\nFeel free to consult us about anything,\nfrom minor concerns to sports-related injuries.',d:['Can any symptoms be seen?','My child has been injured','School health check said further examination needed','Concerned about posture or appearance','Told their body is stiff at club activities','Flat feet in children','My child stopped moving their arm']},
+    'Prenatal & Postnatal':{a:'[Prenatal & Postnatal Pain Clinic]\n\nWe specialize in pain and discomfort during pregnancy and after childbirth.',d:['Consultation while pregnant','Postnatal consultation']},
+    'Other Questions':{a:'Here are some frequently asked questions.',d:['Payment & fees','Overseas travel insurance','Is Wi-Fi available?','Wheelchair accessibility','What symptoms do you treat?','Is there a pharmacy nearby?']}
+  },
+  drill:{
+    'Afternoon hours':'Afternoon hours (3:30-6:30 PM) are available Mon/Tue/Wed/Fri only.\nThursday and Saturday: morning hours only.',
+    '2nd & 4th Saturdays':'Closed on 2nd and 4th Saturdays.\n1st, 3rd, 5th Saturdays: open 9:00 AM - 1:00 PM.',
+    'Walk-in wait times':'Walk-in patients are seen between reserved patients, so wait times vary.\nWe recommend arriving at opening: 9:00 AM or 3:30 PM.',
+    'When to arrive after booking':'When you reserve online, a number is issued.\nYou may visit any time during clinic hours.\n\n⚠️ Reception closes at end of clinic hours.',
+    'Can I book for tomorrow?':'Reservations are only available on the day of your visit, online only.\n\n🔗 https://ssc8.doctorqube.com/sousen-clinic/',
+    'What to bring':'[What to Bring]\n\nVisitors from abroad: Please bring your passport.\nResidents in Japan: Please bring your health insurance card.\n\nOther (if applicable): clinic card, medical welfare certificate, medication booklet, referral letter.',
+    'Medical certificates':'Certificates issued by our clinic can be provided the same day.\nFor your own forms, processing time and fees may vary.\nPlease ask reception.',
+    'Visiting without insurance':'Visitors from abroad may consult with their passport.\nResidents in Japan: private treatment without insurance is not available.',
+    'Can I use health insurance?':'Yes. We are an insurance-covered medical institution.\nPlease bring your insurance card.',
+    'Overseas travel insurance':'Overseas travel insurance can be used through insurers or agencies with a Japan office.\nDirect settlement with overseas insurers is not possible, but agency-based handling is available.\nPlease check with your insurer.',
+    'How to cancel rehab':'Please contact us by phone to cancel your rehabilitation appointment.\n📞 06-6753-8751',
+    'Continuing rehab from another clinic':'Yes, possible with referral letters or records.\n⚠️ You cannot receive rehab at two clinics in the same month.',
+    'Combined treatment with judo-therapy/chiropractic clinics':'In principle, we do not allow parallel treatment with judo-therapy clinics.\nHowever, we can refer you to a few affiliated judo-therapy clinics nearby.\n\nCombined treatment with chiropractic clinics is not available.',
+    'Medical & disability certificates':'[Certificate for Police]\nWe can issue certificates for submission to the police after consultation.\nPlease inform reception.\n\n[Disability Certificate]\nAvailable after consultation. Takes approx. 2 weeks.\n\n⚠️ Disability certificate fees may not be covered by your insurance company.\nPlease check with your insurer in advance.\n\n⚠️ We do not fill out certificate requests from non-affiliated judo-therapy clinics.',
+    'Other party insurance won\'t pay':'Even if the other party\'s insurance cannot be used, treatment is possible using compulsory auto insurance or your own health insurance.',
+    'Rehab for traffic accidents':'Yes. We provide rehabilitation for whiplash and muscle/joint issues from traffic accidents.',
+    'Which form number do I need?':'[For on-the-job injuries]\n・First visit to our clinic: Form No. 5\n・Second clinic after another hospital: Form No. 6\n\n[For commuting injuries]\n・First visit to our clinic: Form No. 16-3\n・Second clinic after another hospital: Form No. 16-4\n\nIf unsure, please check with reception.',
+    'Where can I get the form?':'The workers\' compensation form is provided by your company.\nPlease contact your HR or person in charge.',
+    'Can I be seen without the form?':'Yes, you can still be seen.\nUntil the form is provided, we will ask for a deposit to cover the cost.\nPlease feel free to ask reception for details.',
+    'Can I get rehab for work injury?':'Yes. Rehabilitation begins after a doctor\'s consultation.\nPlease visit us for a consultation first.',
+    'Medical certificate in English':'Yes, English medical certificates are available.\nPlease inform staff or the doctor.',
+    'Can any symptoms be seen?':'Yes, please feel free to visit us for any symptoms.\nIf a visit to a pediatrician is needed, we will let you know at the time of consultation.',
+    'My child has been injured':'If your child has been injured,\nwe recommend visiting us as soon as possible.',
+    'School health check said further examination needed':'Yes, we can help.\nWe also handle school health screenings and related paperwork.',
+    'Concerned about posture or appearance':'Yes, consultations are available.\nWe will assess your child\'s posture and condition,\nthen suggest the appropriate course of action.\nPlease feel free to consult us.',
+    'Told their body is stiff at club activities':'Yes, we can see your child.\nPlease feel free to consult us about stiffness or movement concerns.',
+    'Flat feet in children':'Yes, we can help.\nBased on X-rays and physical examination,\nwe will provide appropriate treatment such as rehabilitation\nor custom medical insoles suited to your child.',
+    'My child stopped moving their arm':'Please visit us as soon as possible.\nThere is a possibility of a fracture or nursemaid\'s elbow.\nWe recommend coming to our clinic before visiting a judo-therapy clinic.',
+    'Consultation while pregnant':'Yes. Consultations are available during pregnancy.\nPlease inform us if you are pregnant, as some tests (X-rays) may be restricted.',
+    'Postnatal consultation':'We treat postnatal back pain and pelvic discomfort.\nRehab and lifestyle guidance available.',
+    'Payment & fees':'[Fees]\nFees vary depending on tests and treatment.\nExact amounts are confirmed after consultation.\n\nFor patients without Japanese health insurance,\nfees are approximately ¥25,000–¥60,000 depending on treatment.\nA receipt will be provided, which can be submitted to your travel insurance company.\n\n[Payment]\nCash or credit cards only.\n❌ Mobile payments not available.',
+    'Is Wi-Fi available?':'We are sorry, but Wi-Fi is not available at our clinic.',
+    'Wheelchair accessibility':'Yes. Our clinic is barrier-free.',
+    'What symptoms do you treat?':'We treat fractures, sprains, bruises, joint and muscle pain, osteoporosis, and more.\n\n🔗 https://sousen-clinic.com/pg297.html',
+    'Is there a pharmacy nearby?':'We provide external prescriptions.\nThe nearest pharmacy is on the same floor as our clinic.'
+  }
+},
+
+zh:{
+  ph:'请输入您的消息...',
+  hi:'您好！\n欢迎来到草泉骨科诊所 😊\n\n请从下方选择类别，\n或直接输入您的问题。',
+  fb:'感谢您的提问。\n非常抱歉，此内容可能难以通过聊天进行解答。\n请致电或直接来院，我们将为您详细说明。\n※请注意，电话对应可能仅限日语，敬请谅解。\n\n📞 06-6753-8751',
+  cats:['诊疗时间','交通与停车','预约・就诊・携带物品','康复治疗','交通事故','工伤','外国患者','儿童','产前产后','其他问题','🏠 返回官网'],
+  catData:{
+    '诊疗时间':{a:'【诊疗时间】\n\n周一、周二、周三、周五\n　上午 9:00-12:00\n　下午 15:30-18:30\n\n周四\n　上午 9:00-12:00（下午休诊）\n\n周六\n　上午 9:00-13:00（下午休诊）\n　※仅第1・3・5周周六开诊\n\n休诊日：第2・4周周六、周日、法定节假日',d:['下午诊疗的日期？','第2・4周周六的详情']},
+    '交通与停车':{a:'【交通方式】\n〒550-0013\n大阪府大阪市西区新町4-6-23\nOASIS诊所商城2楼\n📞 06-6753-8751\n\n🚇 大阪地铁 西长堀站 4A出口 步行1分钟\n\n【停车场】\n请使用同一栋大楼三楼的「Times阪急Oasis新町店」。\n\n✅ 最长120分钟免费\n结账时请向工作人员索取停车二维码。',d:[]},
+    '预约・就诊・携带物品':{a:'【预约方式】\n本院诊察仅限网络顺序预约。\n电话预约无法受理，敬请谅解。\n\n🔗 https://ssc8.doctorqube.com/sousen-clinic/\n\n不便网络预约的患者可直接来院，前台会发放号码。',d:['没有预约等待时间多久？','预约后何时来院？','可以预约明天吗？','携带物品','诊断书','没有保险证可以就诊吗？']},
+    '康复治疗':{a:'【康复治疗】\n\n本院康复治疗实行预约制。\n首先需由医生诊察，确认身体状况后再安排。\n\n请先来院接受诊察。\n\n🔗 https://sousen-clinic.com/howtoreservation.html',d:['如何取消康复预约','从其他医院继续康复治疗']},
+    '交通事故':{a:'【交通事故】\n\n本院可受理交通事故造成的伤害。\n\n请事先告知您的保险公司您将在本院就诊，以便手续顺利。\n\n🔗 https://sousen-clinic.com/pg617.html',d:['诊断书・后遗症诊断书','对方保险无法使用时','交通事故的康复治疗']},
+    '工伤':{a:'【工伤】\n\n本院可受理工伤（工作中及通勤途中的受伤）。\n\n请携带公司提供的工伤表格。',d:['工伤可以做康复治疗吗？']},
+    '外国患者':{a:'【外国患者支持】\n\n・院长信贵医生可进行英语诊察\n・代诊医生使用翻译机进行诊察\n・前台工作人员使用翻译工具\n・提供英文版问诊表\n\n旅行中的外国患者可凭护照就诊。',d:['可以开具英文诊断书吗？','海外旅行保险','没有保险证可以就诊吗？']},
+    '儿童':{a:'【儿童】\n\n本院可为婴儿到高中生的所有儿童提供诊察与治疗。\n无论小问题还是运动损伤都可随时咨询。',d:['儿童运动损伤']},
+    '产前产后':{a:'【产前产后疼痛门诊】\n\n专门应对妊娠期及产后的身体疼痛与不适。',d:['怀孕期间可以就诊吗？','产后就诊']},
+    '其他问题':{a:'以下是常见问题。\n请从下方选择。',d:['支付方式','海外旅行保险','可以使用Wi-Fi吗？','无障碍设施','本院可诊疗哪些症状？','附近有药店吗？']}
+  },
+  drill:{
+    '下午诊疗的日期？':'下午诊疗（15:30-18:30）仅限周一、周二、周三、周五。\n周四和周六仅上午诊疗。',
+    '第2・4周周六的详情':'第2・4周周六休诊。\n第1・3・5周周六上午9:00-13:00开诊。',
+    '没有预约等待时间多久？':'无预约患者将在预约患者的间隙就诊，等待时间因情况而异。\n建议在上午9:00或下午15:30开诊时段前来。',
+    '预约后何时来院？':'网络预约后会发放号码。在诊疗时间内可随时来院。\n\n⚠️ 诊疗时间结束后将无法挂号。',
+    '可以预约明天吗？':'预约仅限就诊当天，且只能通过网络进行。\n\n🔗 https://ssc8.doctorqube.com/sousen-clinic/',
+    '携带物品':'【就诊携带物品】\n\n旅行中的外国患者：请携带护照。\n居住在日本的患者：请携带健康保险证。\n\n其他（如有）：诊察券、公费医疗证、药物手册、介绍信。',
+    '诊断书':'本院出具的诊断书可当日领取。\n若需医生填写您提供的表格，时间与费用视内容而定，请向前台咨询。',
+    '没有保险证可以就诊吗？':'外国旅行者：可凭护照就诊。\n居住在日本的患者：本院不提供无保险证的自费诊疗。',
+    '海外旅行保险':'海外旅行保险可通过在日本设有窗口的保险公司或代理店使用。\n无法与海外保险公司直接结算，但通过代理店可对应。\n详情请向您的保险公司确认。',
+    '如何取消康复预约':'前一天18:30前可通过网页或电话取消。\n当天取消请务必电话联系。\n📞 06-6753-8751',
+    '从其他医院继续康复治疗':'可以。请携带介绍信或既往治疗记录。\n⚠️ 同月内不可在两家医院同时接受康复治疗。',
+    '诊断书・后遗症诊断书':'本院可出具警察提交用诊断书及后遗症诊断书。\n后遗症诊断书约需2周。\n请向保险公司确认费用承担。',
+    '对方保险无法使用时':'即使对方保险无法使用，也可使用强制汽车保险或您自己的健康保险进行诊疗。',
+    '交通事故的康复治疗':'可以。本院可为交通事故导致的颈椎扭伤及关节肌肉不适提供康复治疗。',
+    '需要哪种表格编号？':'【工作中受伤】\n・首次就诊本院：第5号表格\n・已在其他医院就诊，本院为第2家：第6号表格\n\n【通勤途中受伤】\n・首次就诊本院：第16-3号表格\n・已在其他医院就诊，本院为第2家：第16-4号表格\n\n如有疑问，请在前台确认。',
+    '在哪里可以拿到表格?':'工伤表格由公司提供。\n请联系公司的人事或负责人。',
+    '没有表格可以就诊吗？':'可以就诊。\n在提交表格之前，我们将收取相应的预付金。\n详情请向前台咨询。',
+    '工伤可以做康复治疗吗？':'可以。需医生诊察后开始康复治疗。\n请先来院接受诊察。',
+    '可以开具英文诊断书吗？':'可以。本院可出具英文诊断书。\n如有需要，请告知工作人员或医生。',
+    '任何症状都可以就诊吗？':'是的，任何症状均可来院就诊。\n如需小儿科诊察，我们会在就诊时告知。',
+    '我的孩子受伤了':'如果孩子受伤，建议尽早来院就诊。',
+    '学校体检说需要进一步检查':'可以。本院可对应学校体检及相关文件。',
+    '担心孩子的姿势或外观':'是的，可以进行诊察。\n我们将确认孩子的姿势与身体状况，提出适当的建议。\n欢迎随时咨询。',
+    '部活中被说身体僵硬':'是的，可以就诊。\n关于身体僵硬或动作方面的问题，欢迎随时咨询。',
+    '儿童扁平足':'可以对应。\n通过X光及外观诊察，提供康复或定制医疗鞋垫等适合孩子的治疗方案。',
+    '孩子不动手臂了':'请尽早来院就诊。\n有骨折或肘内障（桡骨头半脱位）的可能，\n建议在前往柔道整复院之前，先来本院接受诊察。',
+    '怀孕期间可以就诊吗？':'可以。孕期也能接受诊疗。\n但请务必告知我们您正在怀孕，因为部分检查（如X光）会受限制。',
+    '产后就诊':'本院应对产后腰痛及骨盆周围不适。\n可提供康复及生活指导支持。',
+    '支付方式':'【费用】\n费用因检查和治疗内容而异，具体金额在诊察后告知。\n\n【支付方式】\n仅限现金或信用卡。\n❌ 不支持手机支付。',
+    '可以使用Wi-Fi吗？':'非常抱歉，本院不提供Wi-Fi。',
+    '无障碍设施':'是的。本院已全面无障碍化。',
+    '本院可诊疗哪些症状？':'本院诊治骨折、扭伤、挫伤、关节肌肉疼痛、骨质疏松等。\n\n🔗 https://sousen-clinic.com/pg297.html',
+    '附近有药店吗？':'本院实行院外处方。\n请在您就近的调剂药局或常用药局取药。',
+    '诊察费用大概多少？':'费用因检查及治疗内容而异，具体金额在诊察后告知。\n\n无日本健康保险的患者，费用约为25,000日元至60,000日元。\n本院将提供收据，可向旅行保险公司提交报销。',
+    '水针治疗':'本院提供水针（Hydro Release）治疗。\n初次适用健康保险，第2次起为自费（每部位5,000日元）。\n※仅在医生判断适应后实施。',
+    'MRI・CT检查':'本院无院内影像设备。\n将为您安排至合作医院进行检查，结果在本院说明。',
+    '介护保险':'访问康复及通所康复（Re:Life）可使用介护保险。\n普通诊疗仅适用健康保险。'
+  }
+}
+};
+
+let lang='ja';
+function go(l){
+  lang=l;
+  document.getElementById('lscreen').style.display='none';
+  document.querySelectorAll('.lb').forEach(b=>b.classList.toggle('on',b.textContent===l.toUpperCase()));
+  const titles={ja:'そうせん整形外科クリニック',en:'Sousen Orthopedic Clinic',zh:'草泉骨科诊所'};
+  document.getElementById('hdr-title').textContent=titles[l]||titles.ja;
+  document.getElementById('inp').placeholder=D[l].ph;
+  document.getElementById('msgs').innerHTML='';
+  botMsg(D[l].hi,D[l].cats,'cat');
+}
+function botMsg(text,buttons,type){
+  const m=document.getElementById('msgs');
+  const row=document.createElement('div');
+  row.className='row b';
+  const safeText = text || '';
+  const linked=safeText.replace(/\n/g,'<br>').replace(/https?:\/\/[^\s<]+/g,u=>`<a class="cl" href="${u}" target="_blank">${u}</a>`);
+  let html=`<div class="av"><img src="./images/director-icon-sousen.png" alt="院長アイコン" style="width:100%;height:100%;object-fit:cover"></div><div>`;
+  if(linked.trim()){
+    html+=`<div class="bbl">${linked}</div>`;
+  }
+  if(buttons&&buttons.length){
+    if(type==='cat'){
+      html+=`<div class="cat-grid">${buttons.map(b=>`<button class="cat-btn" onclick="selCat('${b.replace(/'/g,"\\'")}')"> ${b}</button>`).join('')}</div>`;
+    } else {
+      html+=`<div class="drills">${buttons.map(b=>`<button class="db" onclick="doDrill('${b.replace(/'/g,"\\'")}')"> ${b}</button>`).join('')}</div>`;
+    }
+  }
+  html+='</div>';
+  row.innerHTML=html;
+  m.appendChild(row);
+  m.scrollTop=m.scrollHeight;
+}
+function userMsg(text){
+  const m=document.getElementById('msgs');
+  const row=document.createElement('div');
+  row.className='row u';
+  row.innerHTML=`<div class="bbl">${text}</div>`;
+  m.appendChild(row);
+  m.scrollTop=m.scrollHeight;
+}
+let currentCat=null;
+let currentDrills=null;
+let currentDrillLabel=null;
+
+function selCat(cat){
+  // HPに戻るボタンの処理
+  if(cat==='🏠 HPに戻る'||cat==='🏠 Back to website'||cat==='🏠 返回官网'){
+    window.open('https://sousen-clinic.com','_blank');
+    return;
+  }
+  userMsg(cat);
+  const data=D[lang].catData[cat];
+  if(data){
+    currentCat=cat;
+    currentDrills=data.d;
+    currentDrillLabel=cat.replace(/^[^\s]+\s/,'');
+    setTimeout(()=>{
+      if(data.d && data.d.length){
+        botMsg(data.a,data.d,'drill');
+      } else {
+        // 深掘りボタンがないカテゴリは回答＋カテゴリ一覧に戻るボタンのみ
+        botMsg(data.a,null,null);
+        const backBtn={ja:'📋 カテゴリ一覧に戻る',en:'📋 Back to category list',zh:'📋 返回分类列表'};
+        setTimeout(()=>botMsg('',[backBtn[lang]||backBtn.ja],'drill'),600);
+      }
+    },250);
+  } else {
+    setTimeout(()=>botMsg(D[lang].fb,null,null),250);
+  }
+}
+
+function doDrill(key){
+  if(key==='📋 カテゴリ一覧に戻る'||key==='📋 Back to category list'||key==='📋 返回分类列表'){
+    userMsg(key);
+    setTimeout(()=>botMsg('', D[lang].cats, 'cat'),250);
+    return;
+  }
+  userMsg(key);
+  const ans=D[lang].drill[key];
+  setTimeout(()=>{
+    if(ans && typeof ans === 'object' && ans.a){
+      currentDrills=ans.d;
+      currentDrillLabel=key.replace(/^\d+\.\s/,'');
+      botMsg(ans.a, ans.d, 'drill');
+    } else {
+      botMsg(ans||D[lang].fb, null, null);
+      setTimeout(()=>{
+        if(currentDrills && currentDrills.length){
+          const backBtn={ja:'📋 カテゴリ一覧に戻る',en:'📋 Back to category list',zh:'📋 返回分类列表'};
+          const more={
+            ja:`「${currentDrillLabel}」について、他にご質問はございますか？`,
+            en:`Do you have any other questions about "${currentDrillLabel}"?`,
+            zh:`关于「${currentDrillLabel}」，您还有其他问题吗？`
+          };
+          botMsg(more[lang]||more.ja, [...currentDrills, backBtn[lang]||backBtn.ja], 'drill');
+        } else {
+          const more={ja:'他にご質問はありますか？',en:'Is there anything else I can help you with?',zh:'还有其他问题吗？'};
+          botMsg(more[lang]||'Any other questions?', D[lang].cats, 'cat');
+        }
+      },600);
+    }
+  },250);
+}
+const GAS_URL='https://script.google.com/macros/s/AKfycbxExdt4BIzKBDxK0cZe4CHKHgTnXUIq3FOZfJ5C55OB02jldKnh66I9TaiVkHx3AJpN/exec'; // ★ Google Apps Script URLをここに入力
+
+function logToSheet(message){
+  fetch(GAS_URL,{
+    method:'POST',
+    body:JSON.stringify({lang:lang,message:message}),
+    mode:'no-cors',
+    headers:{'Content-Type':'text/plain'}
+  }).catch(()=>{});
+}
+
+function matchKw(text){
+  const l=text.toLowerCase();
+  const map={
+    ja:[
+      {k:['診療時間','受付','何時','休診','土曜','木曜','午後'],c:'診療時間・休診日'},
+      {k:['駐車','車','アクセス','住所','場所','駅','地図','行き方'],c:'アクセス・駐車場'},
+      {k:['予約','受診','来院','順番','待ち','何時に','持ち物','保険証','マイナ','診察券','紹介状'],c:'予約・受診・持ち物'},
+      {k:['リハビリ','理学療法','pt','リハ'],c:'リハビリ'},
+      {k:['交通事故','むちうち','自賠責'],c:'交通事故について'},
+      {k:['労災','労働','仕事中','通勤'],c:'労災について'},
+      {k:['英語','外国','翻訳','パスポート','旅行','外国人'],c:'外国人旅行者の方へ'},
+      {k:['子供','赤ちゃん','小児','こども','肘','扁平足','姿勢'],c:'子供の整形外科'},
+      {k:['妊娠','産後','産前','骨盤','出産'],c:'産前産後の痛み外来'},
+      {k:['費用','料金','支払','クレジット','カード','現金','paypay','いくら','wifi','wi-fi','松葉杖','セカンド','骨粗鬆症','薬局','バリアフリー','ハイドロ','MRI','CT','介護'],c:'その他'},
+      {k:['ダイエット','減量','マンジャロ','リベルサス','スーグラ','肥満','やせ','痩せ','体重'],c:'メディカルダイエット'},
+    ],
+    en:[
+      {k:['hour','open','close','holiday','saturday','thursday'],c:'Clinic Hours'},
+      {k:['parking','access','station','address','location','map','direction'],c:'Access & Parking'},
+      {k:['appointment','book','reserve','walk','wait','bring','insurance','card','referral'],c:'Reservations & What to Bring'},
+      {k:['rehab','rehabilitation','physical','therapy'],c:'Rehabilitation'},
+      {k:['accident','traffic','whiplash'],c:'Traffic Accidents'},
+      {k:['work','labor','compensation'],c:'Work Injury'},
+      {k:['english','foreign','translate','passport','travel'],c:'Foreign Patients'},
+      {k:['child','baby','infant','kid','elbow'],c:'Children'},
+      {k:['pregnan','postnatal','postpartum','pelvis'],c:'Prenatal & Postnatal'},
+      {k:['fee','cost','pay','credit','cash','price','wifi','crutch','pharmacy'],c:'Other Questions'},
+    ],
+    zh:[
+      {k:['时间','几点','休诊','周六','周四'],c:'诊疗时间'},
+      {k:['停车','交通','地址','地铁','怎么去'],c:'交通与停车'},
+      {k:['预约','就诊','挂号','等待','带什么','保险','证件','护照'],c:'预约・就诊・携带物品'},
+      {k:['康复','理疗'],c:'康复治疗'},
+      {k:['交通事故','车祸'],c:'交通事故'},
+      {k:['工伤','劳灾','上班'],c:'工伤'},
+      {k:['英语','外国','翻译','护照','旅游'],c:'外国患者'},
+      {k:['小孩','婴儿','儿童','肘'],c:'儿童'},
+      {k:['怀孕','产后','骨盆'],c:'产前产后'},
+      {k:['费用','多少钱','支付','信用卡','现金','wifi','拐杖','药店','水针','介护'],c:'其他问题'},
+    ]
+  };
+  for(const item of (map[lang]||map.ja)){
+    if(item.k.some(k=>l.includes(k)))return item.c;
+  }
+  return null;
+}
+
+function send(){
+  const i=document.getElementById('inp');
+  const t=i.value.trim();if(!t)return;
+  i.value='';userMsg(t);
+  logToSheet(t);
+  const cat=matchKw(t);
+  setTimeout(()=>{
+    if(cat){
+      const data=D[lang].catData[cat];
+      if(data){
+        currentCat=cat;
+        currentDrills=data.d;
+        currentDrillLabel=cat.replace(/^[^\s]+\s/,'');
+        botMsg(data.a,data.d,'drill');
+      } else {
+        botMsg(D[lang].fb,null,null);
+      }
+    } else {
+      botMsg(D[lang].fb,null,null);
+    }
+  },280);
+}
+</script>
+</body>
+</html>
